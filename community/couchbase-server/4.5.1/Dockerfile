@@ -16,9 +16,12 @@ MAINTAINER Couchbase Docker Team <docker@couchbase.com>
 #  numactl: numactl
 RUN apt-get update && \
     apt-get install -yq runit wget python-httplib2 chrpath tzdata \
-    lsof lshw sysstat net-tools numactl  && \
+    lsof lshw sysstat net-tools numactl jq curl && \
     apt-get autoremove && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN curl -o /usr/bin/kubectl -sLO https://storage.googleapis.com/kubernetes-release/release/v1.11.6/bin/linux/amd64/kubectl && \
+chmod 755 /usr/bin/kubectl
 
 ARG CB_VERSION=4.5.1
 ARG CB_RELEASE_URL=https://packages.couchbase.com/releases
